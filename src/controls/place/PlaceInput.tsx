@@ -112,7 +112,7 @@ export default function PlaceInput () {
           <div>Current postion </div>
           <div>X:   {cords[0]}</div>
           <div>Y:   {cords[1]}</div>
-          <div className="pb-10">F:   {cords[2].toUpperCase()}</div>
+          <div className="pb-10">F:   {cords[2] ? cords[2].toUpperCase() : cords[2]}</div>
   <h2>Move Your Robot!</h2>
   <form onSubmit={handleSubmit} className="pt-10">
     <div className="w-full">
