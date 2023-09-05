@@ -31,7 +31,7 @@ export default function PlaceInput () {
         dispatchReset({ type: 'SET_RESET', reset: reset });
     };
    
-    function handleSubmit(e: any) {
+  function handleSubmit(e: any) {
         e.preventDefault();
         
         let directionData = [];

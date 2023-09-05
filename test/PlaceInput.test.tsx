@@ -1,30 +1,29 @@
-// PlaceInput.test.tsx
-
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
-import PlaceInput from '../src/controls/place/PlaceInput'; // Replace with the correct import path
+import { render, screen, fireEvent } from '@testing-library/react';
+import { vi, describe, it } from 'vitest';
 
-describe('PlaceInput component', () => {
-  test('renders without errors', () => {
-    render(<PlaceInput />);
-    // Add your assertions here, e.g., checking if certain elements are in the document
-    expect(screen.getByText('Move Your Robot!')).toBeInTheDocument();
+import PlaceInput from '../src/controls/place/PlaceInput';
+import { ControlsProvider } from '../src/controls/contexts/ControlsProvider';
+
+describe('PlaceInput', () => {
+  it('dispatches valid control data on submit', () => {
+    const dispatchControls = vi.fn();
+
+    render(
+      <ControlsProvider value={{ dispatchControls }}>
+        <PlaceInput />
+      </ControlsProvider>
+    );
+
+    fireEvent.change(screen.getByPlaceholderText(/place/i), {
+      target: { value: 'place 1 2 north' },
+    });
+
+    fireEvent.click(screen.getByText('Submit')); // Use fireEvent.click for form submission
+
+    expect(dispatchControls).toHaveBeenCalledWith({
+      type: 'UPDATE_CONTROLS',
+      data: ['place 1 2 north'],
+    });
   });
-
-  test('handles input change', () => {
-    render(<PlaceInput />);
-    const inputElement = screen.getByPlaceholderText('Place x,y North');
-    fireEvent.change(inputElement, { target: { value: 'place 1,2 north' } });
-    expect(inputElement).toHaveValue('place 1,2 north');
-  });
-
-  test('submits the form', () => {
-    const mockSubmit = jest.fn();
-    render(<PlaceInput />);
-    const submitButton = screen.getByText('Submit');
-    fireEvent.click(submitButton);
-    expect(mockSubmit).toHaveBeenCalledTimes(1); // Ensure that your submit function was called
-  });
-
-  // Add more test cases as needed
 });
