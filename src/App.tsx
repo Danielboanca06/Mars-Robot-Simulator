@@ -1,6 +1,6 @@
 import './App.css';
-import Board from './board/Board';
-import Controls from './controls/Controls';
+import Grid from '../src/board/Grid';
+import Control from './controls/Controls';
 import { ControlsProvider } from './controls/contexts/ControlsProvider';
 import { ResetProvider } from './controls/contexts/ResetProvider';
 import { ReportProvider } from './controls/contexts/ReportProvider';
@@ -12,22 +12,18 @@ function App() {
     <ControlsProvider>
       <ResetProvider>
         <ReportProvider>
-    <br />
-    <br />
-    <br />
-    <div className='flex flex-col md:flex-row-reverse md:justify-around justify-center items-center md:items-start'>
- 
+          <div className='text-4xl text-center text-black p-12'>
+            Mars Robot Simulator
+          </div>
+          <div className='flex flex-col md:flex-row-reverse md:justify-around justify-center items-center md:items-start text-black'>
+      
 
-    <div className="flex justify-center">
-    <Board/>
-  </div>
-  <div className="flex">
-    <Controls/>
-  </div>
-  
-
-   
-
+          <div className="flex justify-center">
+          <Grid/>
+        </div>
+        <div className="flex">
+          <Control/>
+        </div>
         </div>
         </ReportProvider>
         </ResetProvider>

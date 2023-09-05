@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { useControlContext } from "../../controls/contexts/ControlsProvider";
-import { useIsPlaceInput } from "../../CustomHooks/useIsPlaceInput";
-import { useResetContext } from "../../controls/contexts/ResetProvider";
-import { useReportContext } from "../../controls/contexts/ReportProvider";
+import { useControlContext } from "../../../controls/contexts/ControlsProvider";
+import { useIsPlaceInput } from "../../../CustomHooks/useIsPlaceInput";
+import { useResetContext } from "../../../controls/contexts/ResetProvider";
+import { useReportContext } from "../../../controls/contexts/ReportProvider";
 import MarsRobot from "./MarsRobot";
 type FacingDirection = 'north' | 'east' | 'south' | 'west';
 

@@ -19,9 +19,7 @@ const ControlsContext = createContext<MyContextType | undefined>(undefined);
 
 interface ControlsProviderProps {
   children: ReactNode;
-  value: {
-    dispatchControls: Function; 
-  }
+  
 }
 
 const initialState: MyState = {

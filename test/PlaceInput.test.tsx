@@ -2,7 +2,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { vi, describe, it } from 'vitest';
 
-import PlaceInput from '../src/controls/place/PlaceInput';
+import PlaceInput from '../src/controls/inputs/ControlInput';
 import { ControlsProvider } from '../src/controls/contexts/ControlsProvider';
 
 describe('PlaceInput', () => {
@@ -19,7 +19,7 @@ describe('PlaceInput', () => {
       target: { value: 'place 1 2 north' },
     });
 
-    fireEvent.click(screen.getByText('Submit')); // Use fireEvent.click for form submission
+    fireEvent.click(screen.getByText('Submit')); 
 
     expect(dispatchControls).toHaveBeenCalledWith({
       type: 'UPDATE_CONTROLS',

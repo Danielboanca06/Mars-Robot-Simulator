@@ -1,6 +1,6 @@
-import Robot from '../robot/Robot';
-import { useNumberCells } from './useNumberCells';
-import GridCells from './GridCells';
+import Robot from './grid/robot/Robot';
+import { useNumberCells } from './grid/useNumberCells';
+import GridCells from './grid/GridCells';
 
 export default function Grid() {
   const { YNumberCells, XNumberCells } = useNumberCells();

@@ -1,7 +1,7 @@
-import Place from "./place/Place";
+import ControlInput from "./inputs/ControlInput";
 
 export default function Controls () {
     return(
-        <Place/>
+        <ControlInput/>
     )
 }
