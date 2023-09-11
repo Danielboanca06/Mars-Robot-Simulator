@@ -3,13 +3,18 @@ import { useControlContext } from "../../../controls/contexts/ControlsProvider";
 import { useIsPlaceInput } from "../../../CustomHooks/useIsPlaceInput";
 import { useResetContext } from "../../../controls/contexts/ResetProvider";
 import { useReportContext } from "../../../controls/contexts/ReportProvider";
+import { usePlaceRobot } from "./usePlaceRobot";
+import { useMoveRobot } from "./useMoveRobot";
+import { useUpdateDirection } from "./useUpdateDirection";
 import MarsRobot from "./MarsRobot";
+
 type FacingDirection = 'north' | 'east' | 'south' | 'west';
 
 export default function Robot() {
   const { resetState } = useResetContext();
   const { controlState } = useControlContext();
   const { reportDispatch} = useReportContext();
+  
 
   const [screenSize, setScreenSize] = useState<number>(window.innerWidth);
   const [data, setData] = useState<string[]>(['']);
@@ -56,72 +61,42 @@ export default function Robot() {
     };
   }, []);
 
-  async function updateDirection(turnDirection: string) {
-    let newDirection;
-
-    switch (allwaysUpdatedDirection) {
-      case 'north':
-        newDirection = turnDirection === 'left' ? 'west' : 'east';
-        break;
-      case 'east':
-        newDirection = turnDirection === 'left' ? 'north' : 'south';
-        break;
-      case 'south':
-        newDirection = turnDirection === 'left' ? 'east' : 'west';
-        break;
-      case 'west':
-        newDirection = turnDirection === 'left' ? 'south' : 'north';
-        break;
-      default:
-        newDirection = direction;
-
-    }
-   
-    setDirection(newDirection as FacingDirection);
-    allwaysUpdatedDirection = newDirection as FacingDirection;
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  }
-
   useEffect(() => {
     async function handleMovementCommands() {
       for(let movement of data){
-        console.log(movement);
+
         if (useIsPlaceInput(movement)) {
-          const splitPlace = movement.split(' ');
-          console.log(splitPlace);
-          const [_, newX, newY, newDirection] = splitPlace;
-          setX(Number.parseInt(newX));
-          allwaysUpdatedX = Number.parseInt(newX);
-          setY(Number.parseInt(newY));
-          allwaysUpdatedy = Number.parseInt(newY)
-          setDirection(newDirection as FacingDirection);
-          allwaysUpdatedDirection = newDirection as FacingDirection;
+
+          const {x, y, direction} = usePlaceRobot(movement);
+          allwaysUpdatedX = x;
+          allwaysUpdatedy = y;
+          allwaysUpdatedDirection = direction;
+          setX(prevx => prevx = x);
+          setY(prevy => prevy = y);
+          setDirection(prevD => prevD = direction)
+
           await new Promise((resolve) => setTimeout(resolve, 1000));
         }
         if (movement === 'left') {
-          await updateDirection('left');
-        } else if (movement === 'right') {
-          await updateDirection('right');
+          const {direction} = await useUpdateDirection('left', allwaysUpdatedDirection);
+          allwaysUpdatedDirection = direction; 
+          setDirection(prevDirection => prevDirection = direction);
+          await new Promise((resolve) => setTimeout(resolve, 900));
+
+        }else if (movement === 'right') {
+
+          const {direction} = await useUpdateDirection('right', allwaysUpdatedDirection);
+          allwaysUpdatedDirection = direction; 
+          setDirection(prevDirection => prevDirection = direction);
+          await new Promise((resolve) => setTimeout(resolve, 900));
 
         } else if (movement === 'move') {
-          let d = allwaysUpdatedDirection;
-          let x = allwaysUpdatedX;
-          let y = allwaysUpdatedy;
 
-          if (d === 'north' && y <= 4) {
-            setY((prevY) => prevY + 1);
-            allwaysUpdatedy++;
-          } else if (d === 'south' && y >= 1) {
-            setY((prevY) => prevY - 1);
-            allwaysUpdatedy--;
-          } else if (d === 'east' && x <= 4) {
-            setX((prevX) => prevX + 1);
-            allwaysUpdatedX++;
-          } else if (d === 'west' && x >= 1) {
-            setX((prevX) => prevX - 1);
-            allwaysUpdatedX--;
-          }
+          const {x, y} = useMoveRobot(allwaysUpdatedDirection, allwaysUpdatedX, allwaysUpdatedy);
+          allwaysUpdatedX = x;
+          allwaysUpdatedy = y;
+          setX(prevX => prevX = x);
+          setY(prevY => prevY = y);
 
           await new Promise((resolve) => setTimeout(resolve, 700))
         }
