@@ -17,7 +17,7 @@ export async function useUpdateDirection(turnDirection: string, allwaysUpdatedDi
         newDirection = turnDirection === 'left' ? 'south' : 'north';
         break;
     }
-    let direction = newDirection as FacingDirection;
+    let turingDirection = newDirection as FacingDirection;
 
-    return {direction}
+    return {turingDirection}
   }

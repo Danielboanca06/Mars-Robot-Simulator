@@ -1,4 +1,4 @@
-export function useIsPlaceInput(input: string): boolean {
+export function useConfirmingIsPlaceInput(input: string): boolean {
     const regex = /^place\s+(\d)\s+(\d)\s+(north|south|east|west)$/i;
     const match = input.match(regex);
   

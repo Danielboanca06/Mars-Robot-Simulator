@@ -1,16 +1,16 @@
 export function useMoveRobot(direction: string, initalX: number, initialY:number){
-    let y = initialY;
-    let x = initalX;
+    let moveY = initialY;
+    let moveX = initalX;
 
           if (direction === 'north' && initialY <= 4) {
-            y++;
+            moveY++;
           } else if (direction === 'south' && initialY >= 1) {
-            y--;
+            moveY--;
           } else if (direction === 'east' && initalX <= 4) {
-            x++;
+            moveX++;
           } else if (direction === 'west' && initalX >= 1) {
-            x--;
+            moveX--;
           }
 
-          return {y, x};
+          return {moveY, moveX};
 }

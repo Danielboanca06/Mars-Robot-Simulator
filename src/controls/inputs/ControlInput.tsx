@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { useControlContext } from '../contexts/ControlsProvider';
-import { useIsPlaceInput } from '../../CustomHooks/useIsPlaceInput';
+import { useConfirmingIsPlaceInput } from '../../board/grid/robot/useConfirmingIsPlaceInput';
 import { useResetContext } from '../contexts/ResetProvider';
 import { useReportContext } from '../contexts/ReportProvider';
 
@@ -50,7 +50,7 @@ export default function PlaceInput() {
         if (direction[i] === 'report') directionData.push(direction[i]);
       }
 
-      if (useIsPlaceInput(placeDirection)) {
+      if (useConfirmingIsPlaceInput(placeDirection)) {
         setFirstCommand(true);
         directionData.push(placeDirection);
       }
